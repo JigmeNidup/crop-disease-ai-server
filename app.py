@@ -1,11 +1,9 @@
 from flask import Flask, request, jsonify
-from flask_cors import CORS, cross_origin
 import tensorflow as tf
 import numpy as np
 from PIL import Image
 import base64
 from io import BytesIO
-# from flask_ngrok import run_with_ngrok
 
 #fruit models
 print("Loading Fruit Models ....")
@@ -26,8 +24,6 @@ Wheat_model = tf.keras.models.load_model('./models/Crops/Wheat_model.h5')
 print("Loaded Crop Models!")
 
 app = Flask(__name__)
-# run_with_ngrok(app)   
-cors = CORS(app)
 
 def preprocess_base64_image(base64_string):
     # Convert base64 string to bytes
@@ -133,4 +129,5 @@ def process_image():
     except error:
         return {"status:":"false","error":error}
 
-app.run()
+if __name__ == '__main__':
+	app.run(host='0.0.0.0', port=4000, debug=False)
